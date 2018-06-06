@@ -5,19 +5,23 @@ document.addEventListener('DOMContentLoaded', function () {
   
   let tabListEl = document.getElementById("tabList");
 
-  for(let i = tabs.length-1; i >= 0; i--){
-    let tab = tabs[i];
+  function populateTabs(){
+    for(let i = tabs.length-1; i >= 0; i--){
+      let tab = tabs[i];
 
-    let tabEl = document.createElement("li");
-    tabEl.dataset.id = tab.tabId;
+      let tabEl = document.createElement("li");
+      tabEl.dataset.id = tab.tabId;
 
-    let tabTitleEl = document.createElement("p")
-    tabTitleEl.innerHTML = tab.title;
+      let tabTitleEl = document.createElement("p")
+      tabTitleEl.innerHTML = tab.title;
 
-    tabEl.appendChild(tabTitleEl);
-    tabListEl.appendChild(tabEl);
+      tabEl.appendChild(tabTitleEl);
+      tabListEl.appendChild(tabEl);
+    }
   }
 
+  populateTabs();
 
-
+  
+  
 }, false);
