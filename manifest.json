@@ -3,8 +3,9 @@
     "version": "1.0",
     "description": "developing..",
 
+    "manifest_version": 2,
 
-   	"permissions": ["activeTab", "tabs", "declarativeContent","storage"],
+   	"permissions": ["activeTab", "tabs","storage"],
 
 
     "background": {
@@ -17,13 +18,20 @@
     },
 
     "commands": {
+      "down": {
+        "suggested_key": {
+          "default": "Alt+W",
+          "mac":"Alt+W"
+         },
+        "description": "Send a 'toggle-feature' event to the extension"
+      },
       "_execute_browser_action": {
         "suggested_key": {
           "default": "Alt+Q",
           "mac": "Alt+Q"
         }
       }
-    },
+    }
 
-    "manifest_version": 2
+    
   }

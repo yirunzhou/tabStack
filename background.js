@@ -1,17 +1,15 @@
   chrome.runtime.onInstalled.addListener(function() {
-
-    chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
-      chrome.declarativeContent.onPageChanged.addRules([{
-        conditions: [new chrome.declarativeContent.PageStateMatcher({
-          pageUrl: {hostEquals: 'developer.chrome.com'},
-        })
-        ],
-            actions: [new chrome.declarativeContent.ShowPageAction()]
-      }]);
-    });
-
-    console.log("background page working...");
+      console.log("background page working...");
   });
+
+  chrome.commands.getAll(function(commands){
+      console.log(commands);
+  })
+
+  chrome.commands.onCommand.addListener(function(command) {
+    console.log('onCommand event received for message: ', command);
+  });
+
 
     var tabs = [];
 
