@@ -2,16 +2,32 @@
       console.log("background page working...");
   });
 
-  chrome.commands.getAll(function(commands){
-      console.log(commands);
-  })
+  // maintain the tabs array, addToTabs, removeFromTabs
 
-  
-
+  /* store tabId, windowId and other tab info
+   {
+      tabId: tabId,
+      windowId: windowId,
+      title : tab.title
+  }
+  */
 
     var tabs = [];
 
-    // push tab into stack
+    chrome.tabs.onActivated.addListener(function(activeInfo){
+      //avoid duplicate
+      removeFromTabs(activeInfo.tabId);
+      addToTabs(activeInfo.tabId, activeInfo.windowId);
+    })
+
+    chrome.tabs.onRemoved.addListener(function(tabId,removeInfo){
+        removeFromTabs(tabId);
+        console.log("TAB CLOSED BY USER: \n" + 
+                    " tabId : " + tabId);
+    })
+
+
+
     function addToTabs(tabId, windowId){
       chrome.tabs.get(tabId, function(tab){
         tabs.push({
@@ -25,13 +41,6 @@
       })
     }
 
-    chrome.tabs.onActivated.addListener(function(activeInfo){
-      //avoid duplicate
-      removeFromTabs(activeInfo.tabId);
-      addToTabs(activeInfo.tabId, activeInfo.windowId);
-    })
-
-    // remove tab
     function removeFromTabs(tabId){
         tabs = tabs.filter(function(tab){
           let returnVal = tab.tabId !== tabId;
@@ -42,9 +51,3 @@
           return returnVal;
         });
     }
-
-    chrome.tabs.onRemoved.addListener(function(tabId,removeInfo){
-        removeFromTabs(tabId);
-        console.log("TAB CLOSED BY USER: \n" + 
-                    " tabId : " + tabId);
-    })
