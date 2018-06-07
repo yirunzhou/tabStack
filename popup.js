@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       let tabEl = document.createElement("li");
       tabEl.classList.add("tab");
+      tabEl.dataset.indextInStack = tabs.length - 1 - i;
       tabEl.dataset.id = tab.tabId;
 
       let tabTitleEl = document.createElement("p");
@@ -29,7 +30,19 @@ document.addEventListener('DOMContentLoaded', function () {
   populateTabs();
 
   function moveDown(){
+    let tabElList = document.querySelectorAll(".tab");
+    let activeIndexInStack = 1;
 
+    if(activeTabEl){
+      activeIndexInStack = Number(activeTabEl.dataset.indextInStack);
+      activeTabEl.classList.remove("active");
+    }
+    
+    activeIndexInStack = (activeIndexInStack + 1) % tabElList.length;
+    console.log(activeIndexInStack);
+
+    activeTabEl = tabElList[activeIndexInStack];
+    tabElList[activeIndexInStack].classList.add("active");
   }
 
   chrome.commands.onCommand.addListener(function(command){
@@ -43,4 +56,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   })
   
+
+
 }, false);
