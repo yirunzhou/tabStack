@@ -2,7 +2,7 @@
       console.log("background page working...");
   });
 
-  // maintain the tabs array, addToTabs, removeFromTabs
+  // maintain the tabs array, addToTabs, removeFromTabs, updateTab
 
   /* store tabId, windowId and other tab info
    {
@@ -25,6 +25,12 @@
         console.log("TAB CLOSED BY USER: \n" + 
                     " tabId : " + tabId);
     })
+
+    chrome.tabs.onUpdated.addListener(function(tabId,changeInfo,tab){
+        updateTabs(tabId, changeInfo, tab);
+    });
+
+
 
 
 
@@ -50,4 +56,19 @@
           }
           return returnVal;
         });
+    }
+
+    function updateTabs(tabId, changeInfo, tab){
+      let updatedTab = {
+          tabId: tabId,
+          windowId : tab.windowId,
+          title : tab.title
+        }
+
+        console.log(updatedTab);
+
+        let foundIndex = tabs.findIndex(function(tabInTabs){
+          return tabInTabs.tabId == updatedTab.tabId;
+        })
+        tabs[foundIndex] = updatedTab;
     }
