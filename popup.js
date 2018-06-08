@@ -59,8 +59,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   }
 
-  functon moveUp(){
-    
+  function moveUp(){
+
   }
 
   function changeActiveTab(){
