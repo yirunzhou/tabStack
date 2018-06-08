@@ -24,11 +24,17 @@ document.addEventListener('DOMContentLoaded', function () {
       tabEl.dataset.tabId = tab.tabId;
       tabEl.dataset.windowId = tab.windowId;
 
+      //favIcon
+      let tabImgEl = document.createElement("img")
+      tabImgEl.classList.add("icon")
+      tabImgEl.src = tab.favIconUrl || ""
+      tabEl.appendChild(tabImgEl);
+
       //title
       let tabTitleEl = document.createElement("p");
       tabTitleEl.innerHTML = tab.title;
       tabEl.appendChild(tabTitleEl);
-      
+
       //append tabEl to tabListEl
       tabListEl.appendChild(tabEl);
     }
@@ -59,6 +65,9 @@ document.addEventListener('DOMContentLoaded', function () {
     //update the activeTabEl and make it active
     activeTabEl = tabElList[activeIndexInStack];
     tabElList[activeIndexInStack].classList.add("active");
+
+
+
 
     //find the tab in tabs that is going to switch
     let switchTo = null;
@@ -92,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function () {
     activeWindowId = tab.windowId
   }*/
   
-
+  
 
 
 

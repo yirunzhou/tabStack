@@ -8,7 +8,8 @@
    {
       tabId: tabId,
       windowId: windowId,
-      title : tab.title
+      title : tab.title,
+      favIconUrl: tab.favIconUrl
   }
   */
 
@@ -32,14 +33,15 @@
 
 
 
-
+    //functions
 
     function addToTabs(tabId, windowId){
       chrome.tabs.get(tabId, function(tab){
         tabs.push({
           tabId: tabId,
           windowId: windowId,
-          title : tab.title
+          title : tab.title,
+          favIconUrl: tab.favIconUrl
         })
       console.log("TAB ADDED: \n" + 
                   " tabId - " + tabId + "\n" +
@@ -62,7 +64,8 @@
       let updatedTab = {
           tabId: tabId,
           windowId : tab.windowId,
-          title : tab.title
+          title : tab.title,
+          favIconUrl: tab.favIconUrl
         }
 
         console.log(updatedTab);
