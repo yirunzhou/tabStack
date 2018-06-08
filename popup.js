@@ -1,15 +1,75 @@
 document.addEventListener('DOMContentLoaded', function () {
   console.log("DOM fully loaded and parsed");
 
+  /*windowId*/
   let activeWindowId = window.initialWindowId;
   let popupwindowId = null;
 
+  /*tabs from background.js */
   let tabs = chrome.extension.getBackgroundPage().tabs;
   
+  
+
+  /*element of tabList ul*/
   let tabListEl = document.getElementById("tabList");
+
+  /* current activeEl's info*/
   let activeTabEl = null;
 
   let closeOnFocusChange = true;
+
+
+  /* Initialize, render the tabList */
+  populateTabs();
+
+  /* tabElList (aka, array of tabEls) rendered by populateTab() in popup.html */
+  let tabElList = document.querySelectorAll(".tab");
+  let activeIndexInStack = 1;
+
+
+
+
+
+
+  /*--------------------------- FUNCTIONS -----------------------------*/
+
+  function getActiveIndexInStack(){
+
+    //get current active index in stack
+    if(activeTabEl){
+      activeIndexInStack = Number(activeTabEl.dataset.indextInStack);
+    }
+
+  }
+
+  function moveDown(){
+    getActiveIndexInStack();
+    
+    //remove active style
+    activeTabEl.classList.remove("active");
+
+    //move down 
+    activeIndexInStack = (activeIndexInStack + 1) % tabElList.length;
+    console.log(activeIndexInStack);
+
+
+    //update the activeTabEl and add active style
+    activeTabEl = tabElList[activeIndexInStack];
+    tabElList[activeIndexInStack].classList.add("active");
+
+  }
+
+  function changeActiveTab(){
+
+    let switchTo = {
+      tabId: Number(activeTabEl.dataset.tabId),
+      windowId: Number(activeTabEl.dataset.windowId)
+    }
+
+    chrome.tabs.update(switchTo.tabId, { active: true })
+    
+  }
+
 
   function populateTabs(){
     for(let i = tabs.length-1; i >= 0; i--){
@@ -43,46 +103,9 @@ document.addEventListener('DOMContentLoaded', function () {
     activeTabEl = document.querySelectorAll(".tab")[1];
     activeTabEl.classList.add("active");
   }
+  
 
-  populateTabs();
-
-  function moveDown(){
-
-    //get array of tabEl
-    let tabElList = document.querySelectorAll(".tab");
-    let activeIndexInStack = 1;
-
-    //get current active index in stack
-    if(activeTabEl){
-      activeIndexInStack = Number(activeTabEl.dataset.indextInStack);
-      activeTabEl.classList.remove("active");
-    }
-    
-    //move down
-    activeIndexInStack = (activeIndexInStack + 1) % tabElList.length;
-    console.log(activeIndexInStack);
-
-    //update the activeTabEl and make it active
-    activeTabEl = tabElList[activeIndexInStack];
-    tabElList[activeIndexInStack].classList.add("active");
-
-
-
-
-    //find the tab in tabs that is going to switch
-    let switchTo = null;
-    if(activeTabEl){
-      for(let i = 0; i < tabs.length; i++){
-        if(tabs[i].tabId === Number(activeTabEl.dataset.tabId)){
-          switchTo = tabs[i];
-        }
-      }
-    }
-    if(switchTo){
-      console.log("switch to tab: ", switchTo);
-      changeActiveTab(switchTo);
-    }
-  }
+// key binding
 
   chrome.commands.onCommand.addListener(function(command){
     switch (command){
@@ -94,12 +117,35 @@ document.addEventListener('DOMContentLoaded', function () {
         break;
     }
   })
+
+  document.onkeydown = function(e){
+    switch (e.keyCode) {
+      case 81: //Q
+        console.log("Q down!!");
+        break;
+
+      case 13: //Enter
+        console.log("Enter!!");
+        changeActiveTab();
+        break;
+
+      default:
+        break; 
+    }
+  }
+
+  document.onkeyup = function(e){
+    switch (e.keyCode) {
+      case 18:
+        console.log("Alt up!!");
+        break;
+      default:
+        break; 
+    }
+  }
   
 
-  /*function changeActiveTab(tab){
-    chrome.tabs.update(tab.tabId, { active: true })
-    activeWindowId = tab.windowId
-  }*/
+  
   
   
 
