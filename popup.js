@@ -59,6 +59,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   }
 
+  functon moveUp(){
+    
+  }
+
   function changeActiveTab(){
 
     let switchTo = {
@@ -107,21 +111,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // key binding
 
-  chrome.commands.onCommand.addListener(function(command){
-    switch (command){
-      case "down":
-        console.log(command);
-        moveDown();
-        break;
-      default:
-        break;
-    }
-  })
-
   document.onkeydown = function(e){
     switch (e.keyCode) {
-      case 81: //Q
-        console.log("Q down!!");
+      case 87: //W
+        console.log("W down!!");
+        moveDown();
+        break;
+
+      case 69: //E
+        console.log("E down!!");
+        moveUp();
         break;
 
       case 13: //Enter
@@ -138,6 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
     switch (e.keyCode) {
       case 18:
         console.log("Alt up!!");
+        changeActiveTab();
         break;
       default:
         break; 

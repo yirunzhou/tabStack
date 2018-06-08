@@ -18,13 +18,13 @@
     },
 
     "commands": {
-      "down": {
+      /*"down": {
         "suggested_key": {
           "default": "Alt+W",
           "mac":"Alt+W"
          },
         "description": "Send a 'toggle-feature' event to the extension"
-      },
+      },*/
       "_execute_browser_action": {
         "suggested_key": {
           "default": "Alt+Q",
