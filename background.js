@@ -22,13 +22,51 @@
     })
 
     chrome.tabs.onRemoved.addListener(function(tabId,removeInfo){
-        removeFromTabs(tabId);
-        console.log("TAB CLOSED BY USER: \n" + 
+      removeFromTabs(tabId);
+      console.log("TAB CLOSED BY USER: \n" + 
                     " tabId : " + tabId);
     })
 
     chrome.tabs.onUpdated.addListener(function(tabId,changeInfo,tab){
-        updateTabs(tabId, changeInfo, tab);
+      updateTabs(tabId, changeInfo, tab);
+    });
+
+    chrome.windows.onFocusChanged.addListener(function(windowId){
+      console.log("*******Focus Changed*******");      
+
+      //get the most recently activated tab in this window, if it already exists in tabs
+      let lastActiveTab = null;
+      tabs.forEach(function(tab){
+        if(tab.windowId == windowId){
+          lastActiveTab = tab;
+        }
+      });
+
+      if(lastActiveTab != null){
+        console.log("lastActiveTab is : ");
+        console.log(lastActiveTab);
+        console.log("------");
+
+        //remove the lastActive Tab from tabs
+        removeFromTabs(lastActiveTab.tabId);
+
+        //add this to bottom of tabs
+        addToTabs(lastActiveTab.tabId, lastActiveTab.windowId);
+      }
+      
+      else { // lastActiveTab == null, means the active tab in the window has been opened before
+       if(windowId != -1){
+        chrome.tabs.query({windowId: windowId, active: true}, function(results){
+          lastActiveTab = {
+            tabId: results[0].id,
+            windowId : results[0].windowId,
+            title: results[0].title,
+            favIconUrl: results[0].favIconUrl
+          }
+          addToTabs(lastActiveTab.tabId, lastActiveTab.windowId);
+        })
+       }
+      }      
     });
 
 

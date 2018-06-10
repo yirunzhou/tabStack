@@ -70,7 +70,10 @@ document.addEventListener('DOMContentLoaded', function () {
       windowId: Number(activeTabEl.dataset.windowId)
     }
 
-    chrome.tabs.update(switchTo.tabId, { active: true })
+    chrome.tabs.update(switchTo.tabId, { active: true }, function(){
+      chrome.windows.update(switchTo.windowId, { focused: true });
+    });
+
     
   }
 
@@ -103,9 +106,15 @@ document.addEventListener('DOMContentLoaded', function () {
       tabListEl.appendChild(tabEl);
     }
 
-    // make index==1 El active
+    if(tabs.length > 1){
+      // make index==1 El active
     activeTabEl = document.querySelectorAll(".tab")[1];
     activeTabEl.classList.add("active");
+    } else {
+      if(tabs.length == 0){
+        window.close();
+      }
+    }
   }
   
 
@@ -114,17 +123,14 @@ document.addEventListener('DOMContentLoaded', function () {
   document.onkeydown = function(e){
     switch (e.keyCode) {
       case 87: //W
-        console.log("W down!!");
         moveDown();
         break;
 
       case 69: //E
-        console.log("E down!!");
         moveUp();
         break;
 
       case 13: //Enter
-        console.log("Enter!!");
         changeActiveTab();
         break;
 
@@ -136,11 +142,10 @@ document.addEventListener('DOMContentLoaded', function () {
   document.onkeyup = function(e){
     switch (e.keyCode) {
       case 18:
-        console.log("Alt up!!");
         changeActiveTab();
         break;
       default:
-        break; 
+        break;
     }
   }
   
