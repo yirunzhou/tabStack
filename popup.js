@@ -1,49 +1,32 @@
 document.addEventListener('DOMContentLoaded', function () {
   console.log("DOM fully loaded and parsed");
 
-  /*windowId*/
+  /* windowId */
   let activeWindowId = window.initialWindowId;
   let popupwindowId = null;
 
-  /*tabs from background.js */
+  /* tabs from background.js */
   let tabs = chrome.extension.getBackgroundPage().tabs;
-  
-  
 
-  /*element of tabList ul*/
+  /* element of tabList ul */
   let tabListEl = document.getElementById("tabList");
 
-  /* current activeEl's info*/
+  /* current activeEl */
   let activeTabEl = null;
-
-  let closeOnFocusChange = true;
-
 
   /* Initialize, render the tabList */
   populateTabs();
 
-  /* tabElList (aka, array of tabEls) rendered by populateTab() in popup.html */
+  /* tabElList (array of li, aka tabEl) rendered by populateTab() in popup.html */
   let tabElList = document.querySelectorAll(".tab");
   let activeIndexInStack = 1;
 
 
 
 
-
-
   /*--------------------------- FUNCTIONS -----------------------------*/
 
-  function getActiveIndexInStack(){
-
-    //get current active index in stack
-    if(activeTabEl){
-      activeIndexInStack = Number(activeTabEl.dataset.indextInStack);
-    }
-
-  }
-
   function moveDown(){
-    getActiveIndexInStack();
     
     //remove active style
     activeTabEl.classList.remove("active");
