@@ -1,6 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
   console.log("DOM fully loaded and parsed");
 
+
+  /*--------------------------- VARIABLES -----------------------------*/
+
   /* windowId */
   let activeWindowId = window.initialWindowId;
   let popupwindowId = null;
@@ -22,32 +25,33 @@ document.addEventListener('DOMContentLoaded', function () {
   let activeIndexInStack = 1;
 
 
-
-
   /*--------------------------- FUNCTIONS -----------------------------*/
 
   function moveDown(){
-    
-    //remove active style
+    // remove active style
     activeTabEl.classList.remove("active");
 
-    //move down 
+    // move down 
     activeIndexInStack = (activeIndexInStack + 1) % tabElList.length;
-    console.log(activeIndexInStack);
 
-
-    //update the activeTabEl and add active style
+    // update the activeTabEl and add active style
     activeTabEl = tabElList[activeIndexInStack];
     tabElList[activeIndexInStack].classList.add("active");
-
   }
 
   function moveUp(){
+    // remove active style
+    activeTabEl.classList.remove("active");
 
+    activeIndexInStack --;
+    if(activeIndexInStack < 0) activeIndexInStack += tabElList.length;
+
+    // update the activeTabEl and add active style
+    activeTabEl = tabElList[activeIndexInStack];
+    tabElList[activeIndexInStack].classList.add("active");
   }
 
   function changeActiveTabAndClose(){
-
     let switchTo = {
       tabId: Number(activeTabEl.dataset.tabId),
       windowId: Number(activeTabEl.dataset.windowId)
@@ -101,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   
 
-// key binding
+  /*--------------------------- KEY BINDINGS & MOUSE BEHAVIOR -----------------------------*/
 
   document.onkeydown = function(e){
     switch (e.keyCode) {
@@ -109,9 +113,17 @@ document.addEventListener('DOMContentLoaded', function () {
         moveDown();
         break;
 
-      /*case 69: //E
+      case 87: //W
         moveUp();
-        break;*/
+        break;
+
+      case 40: //Down
+        moveDown();
+        break;
+
+      case 38: //Up
+        moveUp();
+        break;
 
       case 13: //Enter
         changeActiveTabAndClose();
