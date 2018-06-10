@@ -1,4 +1,8 @@
 
+#tabList{
+	list-style: none;
+}
+
 .tab{
 	border: 1px solid cyan;
 }
@@ -18,4 +22,10 @@
 
 .active{
 	border: 2px solid red;
+}
+
+
+body {
+	width: 400px;
+	outline: none;
 }

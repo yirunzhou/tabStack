@@ -122,13 +122,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.onkeydown = function(e){
     switch (e.keyCode) {
-      case 87: //W
+      case 81: //Q
         moveDown();
         break;
 
-      case 69: //E
+      /*case 69: //E
         moveUp();
-        break;
+        break;*/
 
       case 13: //Enter
         changeActiveTabAndClose();
