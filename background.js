@@ -2,7 +2,7 @@
       console.log("background page working...");
   });
 
-  // maintain the tabs array, addToTabs, removeFromTabs, updateTab
+  // maintain the tabs array, function addToTabs, removeFromTabs, updateTab
 
   /* store tabId, windowId and other tab info
    {

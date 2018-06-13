@@ -1,10 +1,43 @@
 
-#tabList{
-	list-style: none;
+
+#tabList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    overflow-y: scroll;
+    background: #fafafa;
 }
 
-.tab{
-	border: 1px solid cyan;
+.tab {
+    position: relative;
+    border-radius: 3px;
+    height: 36px;
+    border: 2px solid transparent;
+    color: #101010;
+    box-sizing: border-box;
+    cursor: pointer;
+    vertical-align: middle;
+    overflow: hidden;
+    padding: 6px 7px;
+    background: #fafafa;
+    margin: 1px;
+}
+
+.tab.visible {
+    display: block;
+}
+
+.tab.active {
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    background: rgba(46, 127, 185, 0.04);
+    color: #2e7fb9;
+}
+
+.tab p{
+	margin-top:3px;
+	margin-bottom: 3px;
+	font-size:14px;
 }
 
 .icon{
@@ -12,20 +45,17 @@
     height: 15px;
     float: left;
     margin: 0 10px 0 0;
-    /* background: #e0e0e0; */
-    /* border: 2px solid #f3f3f3; */
     border-radius: 3px;
     overflow: hidden;
     padding: 0;
     box-sizing: border-box;
 }
 
-.active{
-	border: 2px solid red;
-}
-
 
 body {
+	margin: 0;
+ 	padding: 0;
+ 	box-sizing: border-box;
 	width: 400px;
 	outline: none;
 }
