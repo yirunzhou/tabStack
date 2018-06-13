@@ -16,23 +16,30 @@
     var tabs = [];
 
     chrome.tabs.onActivated.addListener(function(activeInfo){
-      //avoid duplicate
       removeFromTabs(activeInfo.tabId);
-      addToTabs(activeInfo.tabId, activeInfo.windowId);
+      addToTabs(activeInfo.tabId);
+
+      console.log("Tab added: " + 
+                  " tabId - " + activeInfo.tabId +
+                  "  windowId - " + activeInfo.windowId);
     })
 
     chrome.tabs.onRemoved.addListener(function(tabId,removeInfo){
       removeFromTabs(tabId);
-      console.log("TAB CLOSED BY USER: \n" + 
-                    " tabId : " + tabId);
+
+      console.log("Tab Closed:" +
+                    " tabId - " + tabId);
     })
 
     chrome.tabs.onUpdated.addListener(function(tabId,changeInfo,tab){
       updateTabs(tabId, changeInfo, tab);
+
+      console.log("Tab Updated: " + 
+                  "tabId -" + tabId);
     });
 
     chrome.windows.onFocusChanged.addListener(function(windowId){
-      console.log("*******Focus Changed*******");      
+      console.log("Focus Changed");
 
       //get the most recently activated tab in this window, if it already exists in tabs
       let lastActiveTab = null;
@@ -43,19 +50,14 @@
       });
 
       if(lastActiveTab != null){
-        console.log("lastActiveTab is : ");
-        console.log(lastActiveTab);
-        console.log("------");
-
         //remove the lastActive Tab from tabs
         removeFromTabs(lastActiveTab.tabId);
-
         //add this to bottom of tabs
-        addToTabs(lastActiveTab.tabId, lastActiveTab.windowId);
+        addToTabs(lastActiveTab.tabId);
       }
       
       else { // lastActiveTab == null, means the active tab in the window has been opened before
-       if(windowId != -1){
+       if(windowId != -1){ 
         chrome.tabs.query({windowId: windowId, active: true}, function(results){
           lastActiveTab = {
             tabId: results[0].id,
@@ -63,7 +65,7 @@
             title: results[0].title,
             favIconUrl: results[0].favIconUrl
           }
-          addToTabs(lastActiveTab.tabId, lastActiveTab.windowId);
+          addToTabs(lastActiveTab.tabId);
         })
        }
       }      
@@ -71,19 +73,17 @@
 
 
 
-    //functions
+    /*------------------FUNCTIONS------------------*/
 
-    function addToTabs(tabId, windowId){
+
+    function addToTabs(tabId){
       chrome.tabs.get(tabId, function(tab){
         tabs.push({
           tabId: tabId,
-          windowId: windowId,
+          windowId: tab.windowId,
           title : tab.title,
           favIconUrl: tab.favIconUrl
         })
-      console.log("TAB ADDED: \n" + 
-                  " tabId - " + tabId + "\n" +
-                  " windowId - " + windowId);
       })
     }
 
@@ -91,8 +91,8 @@
         tabs = tabs.filter(function(tab){
           let returnVal = tab.tabId !== tabId;
           if(returnVal == false){
-            console.log("TAB REMOVED: \n" + 
-                    " tabId : " + tabId);
+            console.log("Tab Removed: " + 
+                    " tabId - " + tabId);
           }
           return returnVal;
         });
@@ -105,8 +105,6 @@
           title : tab.title,
           favIconUrl: tab.favIconUrl
         }
-
-        console.log(updatedTab);
 
         let foundIndex = tabs.findIndex(function(tabInTabs){
           return tabInTabs.tabId == updatedTab.tabId;

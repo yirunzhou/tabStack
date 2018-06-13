@@ -1,4 +1,13 @@
 
+html, body {
+	margin: 0;
+ 	padding: 0;
+ 	box-sizing: border-box;
+	width: 400px;
+	outline: none;
+	overflow: hidden;
+}
+
 
 #tabList {
     list-style: none;
@@ -12,11 +21,11 @@
 .tab {
     position: relative;
     border-radius: 3px;
-    height: 36px;
+    height: 35px;
     border: 2px solid transparent;
     color: #101010;
     box-sizing: border-box;
-    cursor: pointer;
+    /*cursor: pointer;*/
     vertical-align: middle;
     overflow: hidden;
     padding: 6px 7px;
@@ -48,14 +57,6 @@
     border-radius: 3px;
     overflow: hidden;
     padding: 0;
-    box-sizing: border-box;
 }
 
 
-body {
-	margin: 0;
- 	padding: 0;
- 	box-sizing: border-box;
-	width: 400px;
-	outline: none;
-}
