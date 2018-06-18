@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // update the activeTabEl and add active style
     activeTabEl = tabElList[activeIndexInStack];
     tabElList[activeIndexInStack].classList.add("active");
+    document.querySelector(".active").Focus();
   }
 
   function moveUp(){
@@ -49,6 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // update the activeTabEl and add active style
     activeTabEl = tabElList[activeIndexInStack];
     tabElList[activeIndexInStack].classList.add("active");
+
   }
 
   function changeActiveTabAndClose(){
@@ -79,9 +81,10 @@ document.addEventListener('DOMContentLoaded', function () {
       tabEl.dataset.windowId = tab.windowId;
 
       //favIcon
-      let tabImgEl = document.createElement("img")
-      tabImgEl.classList.add("icon")
-      tabImgEl.src = tab.favIconUrl || ""
+      let tabImgEl = document.createElement("img");
+      tabImgEl.classList.add("icon");
+
+      tabImgEl.src = tab.favIconUrl || "";
       tabEl.appendChild(tabImgEl);
 
       //title
@@ -144,12 +147,5 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
   
-
-  
-  
-  
-
-
-
 
 }, false);

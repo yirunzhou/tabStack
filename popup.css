@@ -14,7 +14,7 @@ html, body {
     padding: 0;
     margin: 0;
     width: 100%;
-    overflow-y: scroll;
+    /*overflow-y: scroll;*/
     background: #fafafa;
 }
 

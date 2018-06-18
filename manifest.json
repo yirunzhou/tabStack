@@ -13,14 +13,16 @@
     },
 
     "browser_action": {
-      "default_popup": "popup.html"
+      "default_popup": "popup.html",
+      "default_icon": {
+        "128": "images/tab_stack_128.png"
+      }
     },
 
     "commands": {
       "_execute_browser_action": {
         "suggested_key": {
-          "default": "Alt+1",
-          "mac": "Alt+1"
+          "default": "Alt+1"
         }
       }
     }
